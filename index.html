@@ -4,7 +4,22 @@
 <meta charset="UTF-8">
 <title>di</title>
 </head>
-<body>
-<script src="http://www.danlogs.com/feeds/posts/summary?orderby=published&max-results=5&alt=json-in-script&callback=mycallback"></script>
+<body><script type="text/javascript">
+  function mycallback(json) {
+    for (var i = 0; i < json.feed.entry.length; i++) {
+      for (var j = 0; j < json.feed.entry[i].link.length; j++) {
+        if (json.feed.entry[i].link[j].rel == 'alternate') {
+          var postUrl = json.feed.entry[i].link[j].href;
+          break;
+        }
+      }
+      var postTitle = json.feed.entry[i].title.$t;
+      var postSummary = json.feed.entry[i].summary.$t;
+      var item = '<div class="wrapper"><h3><a href=' + postUrl + '>' + postTitle + '</h3></a><p>' + postSummary + '</p></div>';
+      document.write(item);
+    }
+  }
+</script>
+<script src="http://asdarere.blogspot.com/feeds/posts/summary/-/Barbaran?max-results=5&alt=json-in-script&callback=mycallback"></script>
 </body>
 </html>
