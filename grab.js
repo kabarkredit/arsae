@@ -5,6 +5,9 @@ var app = express();
 
 app.get('/grab', (req, res) => {
 	 request('http://bola.kompas.com/ligaindonesia', function(error, response, html){
+     
+    //printHtml(req, res, html); uncomment jika mau menggunakan function printHtml
+     
 	 	if(html) {
 	 		var regex = /<div class="article__asset"><img src="(.+?)" alt="(.+?)"\/><\/div>/g;
 
@@ -20,6 +23,10 @@ app.get('/grab', (req, res) => {
 	 	}
 	 })
 });
+
+function printHtml(req, res, html) {
+	res.send('<textarea cols="100%" rows="50%">'+ html + '</textarea>');
+}
 
 app.listen('5000', function (req, res) {
 	console.log("server running in port 5000");
